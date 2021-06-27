@@ -6,11 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PHP Browser</title>
     <link rel="stylesheet" href="style.css">
-    
 </head>
 <body>
 <?php
-
 
 print '<div class="title"><br>' . '<p id="type">Type</p>' . ' ' . '<p id="name">Name</p>' . '<p id="action">Action</p>' . '<br></div>';
 print '<br>' . '<hr>';
@@ -52,7 +50,7 @@ foreach (glob($root.$path.'/*') as $file) {
 }
 
 if ($root.$path !== $root)
-print '<button id="back" onclick="history.go(-1);"><<<</button> ';
+    print '<button id="back" onclick="history.go(-1);"><<<</button> ';
 
 ?>
 
