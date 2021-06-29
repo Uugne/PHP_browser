@@ -10,7 +10,6 @@ body * {
     font-size: 35px;
     line-height: 28px;
     margin-left: 70px;
-    
 }
 
 #name {
@@ -52,6 +51,12 @@ a {
     padding: 12px 0 15px 80px;
 }
 
+a:last-child {
+    border: none;
+    margin-left: 130px;
+    font-size: 20px;
+}
+
 #back {
     padding: 8px 25px;
     margin-top: 10px;
@@ -61,3 +66,9 @@ a {
 #back:hover {
     cursor: pointer;
 }
+
+.listas {
+    margin-left: 500px;
+}
+
+
