@@ -31,7 +31,6 @@ body * {
     margin-left: 100px;
     font-size: 18px;
     padding: 12px 0 15px 80px;
-    border-left: 1px solid black;
 }
 
 hr {
@@ -47,14 +46,7 @@ hr:first-of-type {
 a {
     margin-left: 58px;
     font-size: 18px;
-    border-left: 1px solid black;
     padding: 12px 0 15px 80px;
-}
-
-a:last-child {
-    border: none;
-    margin-left: 130px;
-    font-size: 20px;
 }
 
 #back {
@@ -70,5 +62,15 @@ a:last-child {
 .listas {
     margin-left: 500px;
 }
+
+button {
+    margin-left: 10px;
+}
+
+.log {
+    margin-left: 0px;
+}
+
+
 
 

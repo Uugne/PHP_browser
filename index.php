@@ -20,8 +20,28 @@ if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['passw
     } else {
         $msg = 'Wrong username or password';
     }
-}
+};
 
+//Download logic
+if ($_SESSION['logged_in'] == true) {
+            if(isset($_POST['download'])){
+                $file= './' . $_GET['path'];
+                $fileToDownloadEscaped = str_replace("&nbsp;", " ", htmlentities($file, null, 'utf-8'));
+                ob_clean();
+                ob_start();
+                header('Content-Description: File Transfer');
+                header('Content-Type: application/pdf'); 
+                header('Content-Disposition: attachment; filename=' . basename($fileToDownloadEscaped));
+                header('Content-Transfer-Encoding: binary');
+                header('Expires: 0');
+                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                header('Pragma: public');
+                header('Content-Length: ' . filesize($fileToDownloadEscaped)); 
+                ob_end_flush();
+                readfile($fileToDownloadEscaped);
+                exit;
+            }
+};
 
 ?>
 <!DOCTYPE html>
@@ -85,12 +105,17 @@ foreach (glob($root.$path.'/*') as $file) {
 }
 }
 
-// Button
+//Back button logic
 
-// if ($_SESSION['logged_in'] == true){
-// if ($root.$path !== $root)
-//     print '<button id="back" onclick="history.go(-1);"><<<</button> ';
-// }
+print '<br><br>';
+
+$upOne = str_replace(realpath(dirname(__FILE__) . '/..'), '', realpath(dirname(__FILE__)));
+
+if ($_SESSION['logged_in'] == true) {
+print '<button>' . 
+            '<a class="button" href=' . $upOne . '>'."BACK".'</a>' .
+      '</button>';
+};
 
 ?>
 
@@ -101,9 +126,12 @@ foreach (glob($root.$path.'/*') as $file) {
         <input type="password" name="password" placeholder="password = pass" required>
         <button class="btn btn-lg btn-primary btn-block" type="submit" name="login">Login</button>
     </form>
-    <?php if ($_SESSION['logged_in'] == true) print '<a href="index.php?action=logout"> > logout'?>
+    <?php if ($_SESSION['logged_in'] == true) print '<a class="log" href="index.php?action=logout"> > logout'?>
     
 </div>
+
+<br>
+<br>
 
 <?php if ($_SESSION['logged_in'] == true) print '
 <form action = "" method = "POST" enctype = "multipart/form-data">
@@ -111,7 +139,10 @@ foreach (glob($root.$path.'/*') as $file) {
         <input type = "submit">
     </form>' 
     ?>
-    
+<br>
+<br>    
+
+<!-- Download form -->
     <?php
     if ($_SESSION['logged_in'] == true) {
         print '<br>download ';
@@ -136,7 +167,6 @@ if ($_SESSION['logged_in'] == true) {
         $file_size = $_FILES['image']['size'];
         $file_tmp = $_FILES['image']['tmp_name'];
         $file_type = $_FILES['image']['type'];
-        // check extension (and only permit jpegs, jpgs and pngs)
         $file_ext = strtolower(end(explode('.',$_FILES['image']['name'])));
         $extensions = array("jpeg","jpg","png");
         if(in_array($file_ext,$extensions)=== false){
@@ -152,32 +182,7 @@ if ($_SESSION['logged_in'] == true) {
             print_r($errors);
         }
     }
-}
-
-//Download
-print_r($_FILES);
-        // file download logic
-        if(isset($_POST['download'])){
-            // print('Path to download: ' . './' . $_GET["path"] . $_POST['download']);
-            $file='./' . $_POST['download'];
-            // a&nbsp;b.txt --> a b.txt
-            $fileToDownloadEscaped = str_replace("&nbsp;", " ", htmlentities($file, 'utf-8'));
-
-            ob_clean();
-            ob_start();
-            header('Content-Description: File Transfer');
-            header('Content-Type: application/pdf'); // mime type → ši forma turėtų veikti daugumai failų, su šiuo mime type. Jei neveiktų reiktų daryti sudėtingesnę logiką
-            header('Content-Disposition: attachment; filename=' . basename($fileToDownloadEscaped));
-            header('Content-Transfer-Encoding: binary');
-            header('Expires: 0');
-            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-            header('Pragma: public');
-            header('Content-Length: ' . filesize($fileToDownloadEscaped)); // kiek baitų browseriui laukti, jei 0 - failas neveiks nors bus sukurtas
-            ob_end_flush();
-
-            readfile($fileToDownloadEscaped);
-            exit;
-        }
+}   
 
 ?>
 </body>
