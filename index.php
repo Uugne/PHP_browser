@@ -59,7 +59,7 @@ if ($_SESSION['logged_in'] == true) {
 
 // Title 
 if ($_SESSION['logged_in'] == true) {
-    print '<div class="title"><br>' . '<p id="type">Type</p>' . ' ' . '<p id="name">Name</p>' . '<br></div>';
+    print '<div class="title"><br>' . '<p id="type">Type</p>' . ' ' . '<p id="name">Name</p>' .  ' ' . '<p id="name">Action</p><br></div>';
     print '<br>' . '<hr>';
     print '<div class="vline"></div>';
 }
@@ -151,14 +151,7 @@ print '<br>';
 };
 
 // Delete a directory logic
-$items = scandir(__FILE__);
 
-$status=unlink($items);    
-if($status){  
-echo "File deleted successfully";    
-}else{  
-echo "Sorry!";    
-} 
 ?>
 
 <br>
