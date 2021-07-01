@@ -69,8 +69,19 @@ button {
 
 .log {
     margin-left: 0px;
+    padding: 10px;
+    text-decoration: none;
 }
 
+.button {
+    padding: 10px;
+    margin: 0;
+    text-decoration: none;
+}
+
+form {
+    margin-left: 10px;
+}
 
 
 
