@@ -35,7 +35,7 @@ body * {
 
 hr {
     display: block;
-    width: 700px;
+    width: 450px;
     margin-left: 10px;
 }
 
@@ -50,7 +50,7 @@ a {
 }
 
 #back {
-    padding: 8px 25px;
+    padding: 20px 30px;
     margin-top: 10px;
     margin-left: 20px;
 }
@@ -81,4 +81,12 @@ button {
 
 form {
     margin-left: 10px;
+}
+
+#button {
+    padding: 10px 10px;
+}
+
+.light {
+    border-color: #d3d3d3;
 }

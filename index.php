@@ -45,6 +45,7 @@ if ($_SESSION['logged_in'] == true) {
 };
 
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,7 +60,7 @@ if ($_SESSION['logged_in'] == true) {
 
 // Title 
 if ($_SESSION['logged_in'] == true) {
-    print '<div class="title"><br>' . '<p id="type">Type</p>' . ' ' . '<p id="name">Name</p>' .  ' ' . '<p id="name">Action</p><br></div>';
+    print '<div class="title"><br>' . '<p id="type">Type</p>' . ' ' . '<p id="name">Name</p><br></div>';
     print '<br>' . '<hr>';
     print '<div class="vline"></div>';
 }
@@ -110,12 +111,12 @@ print '<hr><hr>';
 
 //Back button 
 
-print '<br><br>';
+print '<br>';
 
 $goBack = substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'],basename($_SERVER['SCRIPT_NAME'])));
 
 if ($_SESSION['logged_in'] == true) {
-    print '<button>' . 
+    print '<button id="button">' . 
                 '<a class="button" href=' . $goBack . '>'."BACK TO MAIN".'</a>' .
           '</button>';
 };
@@ -127,39 +128,18 @@ if ($_SESSION['logged_in'] == true) {
         <h4><?php echo $msg; ?></h4>
         <input type="text" name="username" placeholder="username = user" required autofocus></br>
         <input type="password" name="password" placeholder="password = pass" required>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" name="login">Login</button>
+        <button type="submit" name="login">Login</button>
     </form>
-<?php if ($_SESSION['logged_in'] == true) print '<button><a class="log" href="index.php?action=logout"> > logout</button>'?>
+<?php if ($_SESSION['logged_in'] == true) print '<button><a class="log" href="index.php?action=logout"> > logout</button></a>'?>
 </div>
-
-<?php
-
-// Make a directory logic
-
-if ($_SESSION['logged_in'] == true) {
-    if(isset($_POST["Submit1"])){
-    mkdir($_POST["str"]);
-    echo "Directory Created.";
-    };
-
-print '<form method="POST">
-            Enter directory name: <input type="text" name="str">
-            <input type="submit" name="Submit1" value="Create Directory">
-      </form>';
-
-print '<br>';
-};
-
-// Delete a directory logic
-
-?>
-
 <br>
+<br>
+<hr class="light">
 <br>
 
 <!-- Upload file form -->
 
-<?php if ($_SESSION['logged_in'] == true) print '<p>Upload a picture:<p>
+<?php if ($_SESSION['logged_in'] == true) print '&nbsp&nbsp&nbspUpload a picture:
     <form action = "" method = "POST" enctype = "multipart/form-data">
         <input type = "file" name = "image">
         <input type = "submit">
@@ -197,11 +177,12 @@ if ($_SESSION['logged_in'] == true) {
 ?>
 <br>
 <br>
+<hr class="light">
 
 <!-- Download form -->
 <?php
     if ($_SESSION['logged_in'] == true) {
-        print '<br>Download a file:';
+        print '<br>&nbsp&nbsp&nbspDownload a file:';
         $dir_contents = scandir('./');
         foreach($dir_contents as $content){
             if(is_file($content)){
@@ -211,6 +192,64 @@ if ($_SESSION['logged_in'] == true) {
             }
         }
     }
+?>
+<br>
+<br>
+<hr class="light">
+<br>
+<!-- Delete a file logic -->
+<?php
+    if ($_SESSION['logged_in'] == true) {
+        if(isset($_GET['delete']) && $_GET['delete'] == 'true') {
+        @unlink("../Animals/".$_POST['fileToDelete']);
+        }
+    };    
+
+if ($_SESSION['logged_in'] == true) {
+    print '&nbsp&nbsp&nbspDelete a file:';
+    if ($handle = opendir("../Animals/")) {  
+        while (false !== ($file = readdir($handle))) 
+    {   
+            if ($file != "." && $file != ".." && $file!= ".git" && is_file($file)) 
+        {    
+            $myfile = "../Animals/".$file; 
+            echo "<form class='delete' method=\"post\" name=\"deleteSomething\" action="?>
+            <?php echo $_SERVER['PHP_SELF'].'?delete=true';?>
+            <?php echo" >
+                    <input type=\"text\" name=\"fileToDelete\" value=".$file." >
+                    <input type=\"submit\" value=\"Delete\">
+                  </form>";
+            }   
+        }  
+        closedir($handle);   
+    } 
+};
+
+?>
+<br>
+<br>
+<hr class="light">
+<br>
+
+<!-- Make a directory logic -->
+<?php
+
+if ($_SESSION['logged_in'] == true) {
+    print '&nbsp&nbsp&nbspMake a directory:';
+    if(isset($_POST['submit']) && $_POST['submit']){
+        $foldername = $_POST['foldername'];
+        $structure = dirname(__FILE__).DIRECTORY_SEPARATOR.$foldername;
+
+            if (!mkdir($structure, 0777, true)) {
+            die('No folder for you!');
+            }
+    }
+
+    print '<form method="post" action="#">
+            <input type="text" name="foldername">
+            <input type="submit" name="submit" value="Create Folder">
+           </form>';
+    };
 ?>
 </body>
 
