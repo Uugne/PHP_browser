@@ -204,11 +204,12 @@ if ($_SESSION['logged_in'] == true) {
 ?>
 <!-- Delete a file logic -->
 <?php
-    if ($_SESSION['logged_in'] == true) {
-        if(isset($_GET['delete'])) {
-        @unlink('./'.$path.$_POST['fileToDelete']);
-        }
-    };    
+
+if ($_SESSION['logged_in'] == true) {
+    if(isset($_GET['delete'])) {
+    @unlink('./'.$path.$_POST['fileToDelete']);
+    }
+};    
 
 if ($_SESSION['logged_in'] == true) {
     print '&nbsp&nbsp&nbspDelete a file:';
@@ -217,17 +218,15 @@ if ($_SESSION['logged_in'] == true) {
             if ($file != "." && $file != ".." && $file!= ".git" && strpos($file, ".") == !false && !is_dir($file)) {     
                 print "<form class='delete' method=\"post\" name=\"deleteSomething\" action=";
                 print $_SERVER['PHP_SELF'].'?delete=true';
-                print"
-                    <form>
-                        <input type=\"text\" name=\"fileToDelete\" value=".$file." >
-                        <input type=\"submit\" value=\"Delete\">
-                    </form>";
+                print
+                    '<form method="post" action="delete.php">
+                        <button class="delete" type="submit" name="fileToDelete" value='.$file.'>'.$file.'</button>
+                    </form>';
                 }   
         }  
         closedir($handle);   
     } 
 };
-
 ?>
 <?php if ($_SESSION['logged_in'] == true) 
     print'<br><br><hr class="light"><br>';
