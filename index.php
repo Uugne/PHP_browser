@@ -169,7 +169,6 @@ if ($_SESSION['logged_in'] == true) {
             }
             if(empty($errors)==true) {
                 move_uploaded_file($file_tmp,"./".$path.'/'.$file_name);
-                print 'Success!';
                 header("Refresh:0");
             } else {
                 print_r($errors);
@@ -206,26 +205,24 @@ if ($_SESSION['logged_in'] == true) {
 <!-- Delete a file logic -->
 <?php
     if ($_SESSION['logged_in'] == true) {
-        if(isset($_GET['delete']) && $_GET['delete'] == 'true') {
-        @unlink("../Animals/".$_POST['fileToDelete']);
+        if(isset($_GET['delete'])) {
+        @unlink('./'.$path.$_POST['fileToDelete']);
         }
     };    
 
 if ($_SESSION['logged_in'] == true) {
     print '&nbsp&nbsp&nbspDelete a file:';
-    if ($handle = opendir("../Animals/")) {  
-        while (false !== ($file = readdir($handle))) 
-    {   
-            if ($file != "." && $file != ".." && $file!= ".git" && is_file($file)) 
-        {    
-            $myfile = "../Animals/".$file; 
-            echo "<form class='delete' method=\"post\" name=\"deleteSomething\" action="?>
-            <?php echo $_SERVER['PHP_SELF'].'?delete=true';?>
-            <?php echo" >
-                    <input type=\"text\" name=\"fileToDelete\" value=".$file." >
-                    <input type=\"submit\" value=\"Delete\">
-                  </form>";
-            }   
+    if ($handle = opendir('./'.$path)) {  
+        while (false !== ($file = readdir($handle))) {   
+            if ($file != "." && $file != ".." && $file!= ".git" && strpos($file, ".") == !false && !is_dir($file)) {     
+                print "<form class='delete' method=\"post\" name=\"deleteSomething\" action=";
+                print $_SERVER['PHP_SELF'].'?delete=true';
+                print"
+                    <form>
+                        <input type=\"text\" name=\"fileToDelete\" value=".$file." >
+                        <input type=\"submit\" value=\"Delete\">
+                    </form>";
+                }   
         }  
         closedir($handle);   
     } 
@@ -241,12 +238,13 @@ if ($_SESSION['logged_in'] == true) {
 
 if ($_SESSION['logged_in'] == true) {
     print '&nbsp&nbsp&nbspMake a directory:';
-    if(isset($_POST['submit']) && $_POST['submit']){
+    if(isset($_POST['submit'])){
         $foldername = $_POST['foldername'];
-        $structure = dirname(__FILE__).DIRECTORY_SEPARATOR.$foldername;
+        $structure = './'.$path.'/'.$foldername;
+        header('refresh:0');
 
-            if (!mkdir($structure, 0777, true)) {
-            die('No folder for you!');
+            if (@!mkdir($structure, 0777, true)) {
+            die('Folder is created!');
             }
     }
 
