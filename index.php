@@ -107,7 +107,9 @@ $root = __DIR__;
     }
 }
 
-print '<hr><hr>';
+if ($_SESSION['logged_in'] == true) 
+    print'<hr>';
+
 
 //Back button 
 
@@ -132,10 +134,10 @@ if ($_SESSION['logged_in'] == true) {
     </form>
 <?php if ($_SESSION['logged_in'] == true) print '<button><a class="log" href="index.php?action=logout"> > logout</button></a>'?>
 </div>
-<br>
-<br>
-<hr class="light">
-<br>
+
+<?php if ($_SESSION['logged_in'] == true) 
+    print'<br><br><hr class="light"><br>';
+?>
 
 <!-- Upload file form -->
 
@@ -159,44 +161,48 @@ if ($_SESSION['logged_in'] == true) {
         $file_type = $_FILES['image']['type'];
         $file_ext = strtolower(end(explode('.',$_FILES['image']['name'])));
         $extensions = array("jpeg","jpg","png");
-            if(in_array($file_ext,$extensions)=== false){
+            if(in_array($file_ext,$extensions) === false){
                 $errors[]="extension not allowed, please choose a JPEG or PNG file.";
             }
             if($file_size > 2097152) {
                 $errors[]='File size must be smaller than 2 MB';
             }
             if(empty($errors)==true) {
-                move_uploaded_file($file_tmp,"./".$file_name);
+                move_uploaded_file($file_tmp,"./".$path.'/'.$file_name);
                 print 'Success!';
-            }else{
+                header("Refresh:0");
+            } else {
                 print_r($errors);
         }
     }
 }   
 
 ?>
-<br>
-<br>
-<hr class="light">
+<?php if ($_SESSION['logged_in'] == true) 
+    print'<br><br><hr class="light">';
+?>
 
 <!-- Download form -->
+
 <?php
-    if ($_SESSION['logged_in'] == true) {
+
+if ($_SESSION['logged_in'] == true) {
+    if ($handle = opendir('./'.$path)) {
         print '<br>&nbsp&nbsp&nbspDownload a file:';
-        $dir_contents = scandir('./');
-        foreach($dir_contents as $content){
-            if(is_file($content)){
-                print('<form action="?path=' . $content . '" method="POST">');
-                print('<input type="submit" name="download" value="' . $content . '"/>');
+        while (false !== ($entry = readdir($handle))) {
+            if ($entry != "." && $entry != ".." && $entry != '.git' && !is_dir($entry) && strpos($entry, ".") !== false) {
+                print('<form action="?path=' . $entry . '" method="POST">');
+                print('<input type="submit" name="download" value="' . $entry . '"/>');
                 print('</form>');
             }
         }
+        closedir($handle);
     }
+};
 ?>
-<br>
-<br>
-<hr class="light">
-<br>
+<?php if ($_SESSION['logged_in'] == true) 
+    print'<br><br><hr class="light"><br>';
+?>
 <!-- Delete a file logic -->
 <?php
     if ($_SESSION['logged_in'] == true) {
@@ -226,10 +232,9 @@ if ($_SESSION['logged_in'] == true) {
 };
 
 ?>
-<br>
-<br>
-<hr class="light">
-<br>
+<?php if ($_SESSION['logged_in'] == true) 
+    print'<br><br><hr class="light"><br>';
+?>
 
 <!-- Make a directory logic -->
 <?php
