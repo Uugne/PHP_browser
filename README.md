@@ -1,6 +1,6 @@
-# PHP files browser
+# PHP file browser
 
-<i>A simple PHP files browser - First sprint project.</i>
+<i>A simple PHP file browser - First sprint project.</i>
 
 ## Functionality
 - Login form/button and Logout button.
