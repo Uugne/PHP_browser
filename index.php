@@ -114,7 +114,8 @@ if ($_SESSION['logged_in'] == true)
 
 print '<br>';
 
-$goBack = substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'],basename($_SERVER['SCRIPT_NAME'])));
+$currentPath = './' . $path;
+$goBack = dirname('?file=' . $currentPath, 1);
 
 if ($_SESSION['logged_in'] == true) {
     print '<button id="button">' . 
@@ -205,8 +206,8 @@ if ($_SESSION['logged_in'] == true) {
 <?php
 
 if ($_SESSION['logged_in'] == true) {
-    if(isset($_GET['delete'])) {
-    @unlink('./'.$path.$_POST['fileToDelete']);
+    if(isset($_GET['delete'])) { 
+    @unlink($_POST['fileToDelete']);
     }
 };    
 
