@@ -3,7 +3,7 @@
 ## Functionality
 - Log in form / Log out button.
 - Ability to browse through directories and display content.
-- Back to the main directory button.
+- Back to the previous directory button.
 - Upload a picture.
 - Download a file.
 - Delete a file.

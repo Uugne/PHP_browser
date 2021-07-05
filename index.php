@@ -119,7 +119,7 @@ $goBack = dirname('?file=' . $currentPath, 1);
 
 if ($_SESSION['logged_in'] == true) {
     print '<button id="button">' . 
-                '<a class="button" href=' . $goBack . '>'."BACK TO MAIN".'</a>' .
+                '<a class="button" href=' . $goBack . '>'."BACK".'</a>' .
           '</button>';
 };
 
