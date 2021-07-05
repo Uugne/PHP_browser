@@ -18,8 +18,8 @@ if (isset($_POST['login']) && !empty($_POST['username']) && !empty($_POST['passw
         $_SESSION['timeout'] = time();
         $_SESSION['username'] = $_POST['username'];
         $msg = 'You have entered valid use name and password';
-    } else {
-        $msg = 'Wrong username or password';
+        } else {
+            $msg = 'Wrong username or password';
     }
 };
 
@@ -104,12 +104,11 @@ $root = __DIR__;
                     print '<div class="dirFile"><p>Directory</p></div>'. ' ' .  '<a href="?file='.urlencode($link).'">'.basename($file).'</a><br><br><hr>'; elseif 
                 (is_file($file)) 
                     print '<div class="dirFile"><p>File</p></div>' . ' ' . '<div class="failai">' . basename($file) . '</div>' . '<br><br><hr>';
+            }
     }
-}
 
 if ($_SESSION['logged_in'] == true) 
     print'<hr>';
-
 
 //Back button 
 
