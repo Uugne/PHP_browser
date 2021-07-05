@@ -17,7 +17,7 @@
 ## Installation
 
 1. Download ZIP with latest version from master branch.
-1. Extract the PHP file browser to AMPPS or XAMMPS www folder.
+1. Extract the PHP file browser to AMPPS or XAMMPS root folder.
 2. In the browser, open the path where you can launch a PHP interpreter.
 3. Login with provided information in the form's placeholders.
 
